@@ -12,7 +12,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(150), unique=True, nullable=False)
     username = db.Column(db.String(150), unique=True, nullable=False)
-    password_hashed = db.Column(db.String(150), nullable=False)
+    password_hashed = db.Column(db.String(255), nullable=False)
     registered_on = db.Column(db.DateTime(
         timezone=True), default=func.now(), nullable=False)
 
