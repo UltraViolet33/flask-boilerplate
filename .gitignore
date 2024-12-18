@@ -2,6 +2,7 @@
 /__pycache__
 /env
 .env
+.venv
 /tests/__pycache__
 /tests/unit/__pycache__
 /tests/functional/__pycache__
