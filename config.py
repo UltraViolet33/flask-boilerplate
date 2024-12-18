@@ -6,6 +6,7 @@ load_dotenv(os.path.join(project_folder, ".env"))
 
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
+DB_TYPE = os.getenv("DB_TYPE")
 DB_NAME = os.getenv("DB_NAME")
 DB_USERNAME = os.getenv("DB_USERNAME")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
@@ -20,7 +21,7 @@ class Config(object):
     SECRET_KEY = os.getenv("SECRET_KEY", default="BAD_SECRET_KEY")
 
     SQLALCHEMY_DATABASE_URI = (
-        f"mysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+        f"{DB_TYPE}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_SECRET_KEY = "super-secret"
