@@ -30,6 +30,20 @@ def initialize_extensions(app):
 
     from app.models.User import User
 
+    @jwt.user_lookup_loader
+    def user_lookup_callback(_jwt_header, jwt_data):
+        identity = str(jwt_data["sub"])
+        return User.query.filter_by(id=identity).one_or_none()
+
+    @jwt.user_identity_loader
+    def user_identity_lookup(user):
+        return str(user.id)
+
+    with app.app_context():
+        # db.create_all()
+        # db.session.add(User(email="test@gmail.com", username="test", password_plaintext="test", by_pwd=True))
+        db.session.commit()
+
 
 def register_blueprints(app):
     from .auth import auth
