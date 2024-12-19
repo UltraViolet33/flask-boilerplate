@@ -5,6 +5,10 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask import Flask
 import os
+from flask_swagger_ui import get_swaggerui_blueprint
+
+SWAGGER_URL = "/swagger"  # URL for accessing Swagger UI
+API_URL = "/static/swagger.yaml"
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -49,6 +53,11 @@ def initialize_extensions(app):
 
 
 def register_blueprints(app):
+
+    swagger_ui_blueprint = get_swaggerui_blueprint(SWAGGER_URL, API_URL)
+    if app.config["FLASK_ENV"] == "development":
+        app.register_blueprint(swagger_ui_blueprint, url_prefix=SWAGGER_URL)
+
     from .auth import auth
     app.register_blueprint(auth, url_prefix="/")
 
