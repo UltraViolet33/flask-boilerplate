@@ -66,3 +66,19 @@ def test_logout_success(test_client, create_user):
     jti = get_jwt()["jti"]
     token_in_blocklist = TokenBlocklist.query.filter_by(jti=jti).first()
     assert token_in_blocklist is not None
+
+
+def test_login_exceed_limit(test_client, create_user):
+    user = create_user(email="test@example.com", password="Password123!")
+    wrong_pwd = "wrongpassword"
+    for _ in range(5):
+        login_response = test_client.post(
+            "/login", json={"email": "test@example.com", "password": wrong_pwd}
+        )
+        assert login_response.status_code == 401
+    
+    login_response = test_client.post(
+            "/login", json={"email": "test@example.com", "password": wrong_pwd}
+        )
+    
+    assert login_response.status_code == 429

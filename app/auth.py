@@ -5,12 +5,13 @@ from app.models.TokenBlocklist import TokenBlocklist
 from datetime import datetime
 from datetime import timezone
 from app import db
-
+from app import limiter
 
 auth = Blueprint("auth", __name__)
 
 
 @auth.route("/login", methods=["POST"])
+@limiter.limit("5 per 15 minutes")
 def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
@@ -41,7 +42,6 @@ def register():
 @jwt_required()
 def protected():
     return jsonify(logged_as=current_user.email), 200
-
 
 
 @auth.route("/logout", methods=["DELETE"])
