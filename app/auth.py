@@ -36,10 +36,13 @@ def register():
 
     return jsonify("User created"), 201
 
+
 @auth.route("/protected", methods=["GET"])
 @jwt_required()
 def protected():
     return jsonify(logged_as=current_user.email), 200
+
+
 
 @auth.route("/logout", methods=["DELETE"])
 @jwt_required()

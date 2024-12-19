@@ -21,7 +21,7 @@ class User(db.Model, Model):
         self.set_password(password_plaintext, bypass_pwd)
         self.registered_on = datetime.now()
 
-    def set_password(self, password_plaintext, bypass_pwd):
+    def set_password(self, password_plaintext, bypass_pwd=False):
         if not password_plaintext:
             raise AssertionError("Password Missing")
         if bypass_pwd:

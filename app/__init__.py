@@ -47,5 +47,7 @@ def initialize_extensions(app):
 
 def register_blueprints(app):
     from .auth import auth
-
     app.register_blueprint(auth, url_prefix="/")
+
+    from .user import user
+    app.register_blueprint(user, url_prefix="/user")
