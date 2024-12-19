@@ -39,10 +39,10 @@ def initialize_extensions(app):
     def user_identity_lookup(user):
         return str(user.id)
 
-    with app.app_context():
-        # db.create_all()
-        # db.session.add(User(email="test@gmail.com", username="test", password_plaintext="test", by_pwd=True))
-        db.session.commit()
+    # with app.app_context():
+    #     # db.create_all()
+    #     # db.session.add(User(email="test@gmail.com", username="test", password_plaintext="test", by_pwd=True))
+    #     db.session.commit()
 
 
 def register_blueprints(app):

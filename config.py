@@ -7,6 +7,7 @@ load_dotenv(os.path.join(project_folder, ".env"))
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 DB_TYPE = os.getenv("DB_TYPE")
+DB_TYPE = os.getenv("DB_TYPE")
 DB_NAME = os.getenv("DB_NAME")
 DB_USERNAME = os.getenv("DB_USERNAME")
 DB_PASSWORD = os.getenv("DB_PASSWORD")

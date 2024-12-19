@@ -1,24 +1,23 @@
 import pytest
 from app import create_app, db
+from app.models.User import User
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture
 def test_client():
-    flask_app = create_app("config.TestingConfig")
+    app = create_app("config.TestingConfig")
+    with app.test_client() as client:
+        with app.app_context():
+            db.create_all()
+            yield client
+            db.drop_all()
 
-    with flask_app.test_client() as testing_client:
-        with flask_app.app_context():
-            yield testing_client
 
+@pytest.fixture
+def create_user():
+    def _create_user(email, password):
+        user = User(email=email, password_plaintext=password)
+        user.save()
+        return user
 
-@pytest.fixture(scope="module")
-def init_database(test_client):
-    db.create_all()
-
-   # insert data in db
-
-    db.session.commit()
-
-    yield
-
-    db.drop_all()
+    return _create_user
